@@ -7,7 +7,8 @@ public class Coordinates {
 
     private Coordinates(Double latitude, Double longitude) {
         this.latitude = latitude;
-        this.longitude = longitude;    }
+        this.longitude = longitude;
+    }
 
     public static Coordinates of(Double latitude, Double longitude) {
         return new Coordinates(latitude, longitude);

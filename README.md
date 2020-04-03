@@ -6,7 +6,7 @@ Clone the project on master branch, the data are here csse_covid_19_data/csse_co
 
 ##### Before inserting documents, set the index configuration for specific data types : geopoint
 
-- index name : covidstats: 
+- index name : covidstats
 
 ```
 PUT http://elasticurl/covidstats
@@ -24,5 +24,15 @@ PUT http://elasticurl/covidstats
 ##### Launch the project
 ```
 ./mvnw clean compile spring-boot:run
+```
+
+##### Start import in elastic
+Prerequisite : 
+- elasticsearch instance up
+- application properties configured to be connected with elasticsearch instance
+
+
+```
+curl http://127.0.0.1:8080/api/covid/load
 ```
 

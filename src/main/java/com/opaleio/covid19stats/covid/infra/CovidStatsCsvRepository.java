@@ -35,10 +35,12 @@ public class CovidStatsCsvRepository implements CovidStats {
     private final String[] headers = {"Province/State","Country/Region","Last Update","Confirmed", "Deaths", "Recovered"};
 
     private final String csvDirectory;
+    private final DateTimeFormatter csvDatePattern;
 
 
     public CovidStatsCsvRepository( @Value("${covid.csv.directory}") String csvDirectory) {
         this.csvDirectory = csvDirectory;
+        this.csvDatePattern = DateTimeFormatter.ofPattern("MM-dd-yyyy");
     }
 
     @Override
@@ -50,6 +52,13 @@ public class CovidStatsCsvRepository implements CovidStats {
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public List<DailyCovidStat> loadDailyStats(LocalDate day) {
+        String filename = csvDirectory + "/" + day.format(csvDatePattern) + ".csv";
+        return loadDataFromCsv(filename);
+    }
+
 
     private List<String> getSourceFiles() {
         try {
@@ -108,8 +117,7 @@ public class CovidStatsCsvRepository implements CovidStats {
 
     private LocalDate extractDateFromFileSource(String fileSource) {
         String dateString = extractDatePatternFromFileName(fileSource);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy");
-        LocalDate date = LocalDate.parse(dateString, formatter);
+        LocalDate date = LocalDate.parse(dateString, csvDatePattern);
         return date;
     }
 
