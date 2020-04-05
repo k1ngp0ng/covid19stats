@@ -13,7 +13,6 @@ public class CovidStatsIndex implements ElasticIndex {
     private Long confirmed;
     private Long death;
     private Long recovered;
-    private Long infected;
     private Coordinates location;
 
     public CovidStatsIndex(LocalDate day, String country, Long confirmed, Long death, Long recovered, Coordinates coordinates) {

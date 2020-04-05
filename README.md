@@ -36,3 +36,11 @@ Prerequisite :
 curl http://127.0.0.1:8080/api/covid/load
 ```
 
+##### Once the data have been injected in elastic 
+Prerequisite : 
+- elasticsearch instance up
+- kibana up and connected to local elasticsearch instance
+
+Import dashboard object and index pattern in kibana
+
+Management > Saved objects, then import and upload into kibana ```kibana/dashboard_objetcs_and_index_pattern.ndjson``` file located inside this project
