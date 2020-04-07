@@ -80,7 +80,7 @@ public class CovidStatsCsvRepository implements CovidStats {
         try(Reader csvFile = new InputStreamReader(resourceFile.getInputStream())) {
             Character csvSeparator = ',';
             Iterable<CSVRecord> records = CSVFormat.DEFAULT
-                    .withHeader(headers)
+                    //.withHeader(headers)
                     .withDelimiter(csvSeparator)
                     .withFirstRecordAsHeader()
                     .parse(csvFile);
