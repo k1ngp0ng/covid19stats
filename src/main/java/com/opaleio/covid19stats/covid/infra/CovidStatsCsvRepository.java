@@ -12,6 +12,7 @@ import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Repository;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -55,7 +56,7 @@ public class CovidStatsCsvRepository implements CovidStats {
 
     @Override
     public List<DailyCovidStat> loadDailyStats(LocalDate day) {
-        String filename = csvDirectory + "/" + day.format(csvDatePattern) + ".csv";
+        String filename = csvDirectory + File.separator + day.format(csvDatePattern) + ".csv";
         return loadDataFromCsv(filename);
     }
 
@@ -80,7 +81,7 @@ public class CovidStatsCsvRepository implements CovidStats {
         try(Reader csvFile = new InputStreamReader(resourceFile.getInputStream())) {
             Character csvSeparator = ',';
             Iterable<CSVRecord> records = CSVFormat.DEFAULT
-                    //.withHeader(headers)
+                    .withHeader(headers)
                     .withDelimiter(csvSeparator)
                     .withFirstRecordAsHeader()
                     .parse(csvFile);
