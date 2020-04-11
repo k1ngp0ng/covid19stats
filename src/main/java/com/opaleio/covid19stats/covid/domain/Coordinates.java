@@ -11,6 +11,9 @@ public class Coordinates {
     }
 
     public static Coordinates of(Double latitude, Double longitude) {
+        if (latitude == null || longitude == null) {
+            return null;
+        }
         return new Coordinates(latitude, longitude);
     }
 
