@@ -8,17 +8,19 @@ import java.util.UUID;
 
 public class CovidStatsIndex implements ElasticIndex {
 
-    private LocalDate day;
-    private String country;
-    private Long confirmed;
-    private Long death;
-    private Long recovered;
-    private Coordinates location;
+    private final LocalDate day;
+    private final String country;
+    private final String region;
+    private final Long confirmed;
+    private final Long death;
+    private final Long recovered;
+    private final Coordinates location;
 
-    public CovidStatsIndex(LocalDate day, String country, Long confirmed, Long death, Long recovered, Coordinates coordinates) {
+    public CovidStatsIndex(LocalDate day, String country, String region, Long confirmed, Long death, Long recovered, Coordinates coordinates) {
         this.day = day;
         this.confirmed = confirmed;
         this.country = country;
+        this.region = region;
         this.death = death;
         this.recovered = recovered;
         this.location = coordinates;
@@ -35,6 +37,10 @@ public class CovidStatsIndex implements ElasticIndex {
 
     public String getCountry() {
         return country;
+    }
+
+    public String getRegion() {
+        return region;
     }
 
     public Long getConfirmed() {

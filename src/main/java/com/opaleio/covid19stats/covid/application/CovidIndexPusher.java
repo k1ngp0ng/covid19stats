@@ -37,8 +37,8 @@ public class CovidIndexPusher {
     }
 
     private CovidStatsIndex buildIndex(DailyCovidStat dailyCovidStat) {
-        return new CovidStatsIndex(dailyCovidStat.getDay(), dailyCovidStat.getCountry(), dailyCovidStat.getConfirmed(),
-                dailyCovidStat.getDeath(), dailyCovidStat.getRecovered(), dailyCovidStat.getCoordinates());
+        return new CovidStatsIndex(dailyCovidStat.day(), dailyCovidStat.country(), dailyCovidStat.region(), dailyCovidStat.confirmed(),
+                dailyCovidStat.death(), dailyCovidStat.recovered(), dailyCovidStat.coordinates());
     }
 
 }

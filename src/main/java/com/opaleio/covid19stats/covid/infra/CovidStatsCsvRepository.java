@@ -81,7 +81,7 @@ public class CovidStatsCsvRepository implements CovidStats {
         try(Reader csvFile = new InputStreamReader(resourceFile.getInputStream())) {
             Character csvSeparator = ',';
             Iterable<CSVRecord> records = CSVFormat.DEFAULT
-                    .withHeader(headers)
+                    //.withHeader(headers)
                     .withDelimiter(csvSeparator)
                     .withFirstRecordAsHeader()
                     .parse(csvFile);
@@ -95,10 +95,12 @@ public class CovidStatsCsvRepository implements CovidStats {
         return dailyCovidStats;
     }
 
+
     private DailyCovidStat buildCovidSingleData(CSVRecord record, LocalDate date) {
-        // change of csv structure with add multiple region fields and new lat, long format
+        /* change of csv structure with add multiple region fields and new lat, long format
+         new header format : FIPS,Admin2,Province_State,Country_Region,Last_Update,Lat,Long_,Confirmed,Deaths,Recovered,Active,Combined_Key */
         if (date.isAfter(LocalDate.of(2020,3, 21))) {
-            return new DailyCovidStat(date, record.get("Country_Region"),
+            return new DailyCovidStat(date, record.get("Country_Region"), record.get("Province_State"),
                     toLong(record.get("Confirmed")), toLong(record.get("Deaths")),
                     toLong(record.get("Recovered")), Coordinates.of(toDouble(record.get("Lat")), toDouble(record.get("Long_"))));
         }
@@ -107,19 +109,19 @@ public class CovidStatsCsvRepository implements CovidStats {
 
     private DailyCovidStat buildOldFormat(CSVRecord record, LocalDate date) {
         Coordinates coordinates = null;
-        // change of csv structure with add of longitude and latitude fields
+        /* change of csv structure with add of longitude and latitude fields
+         old header format : Province/State,Country/Region,Last Update,Confirmed,Deaths,Recovered */
         if (date.isAfter(LocalDate.of(2020,2, 29))) {
             coordinates = Coordinates.of(toDouble(record.get("Latitude")), toDouble(record.get("Longitude")));
         }
-        return new DailyCovidStat(date, convertBadChinaFormat(record.get("Country/Region")),
+        return new DailyCovidStat(date, convertBadChinaFormat(record.get("Country/Region")), record.get(0),
                 toLong(record.get("Confirmed")), toLong(record.get("Deaths")),
                 toLong(record.get("Recovered")),coordinates);
     }
 
     private LocalDate extractDateFromFileSource(String fileSource) {
         String dateString = extractDatePatternFromFileName(fileSource);
-        LocalDate date = LocalDate.parse(dateString, csvDatePattern);
-        return date;
+        return LocalDate.parse(dateString, csvDatePattern);
     }
 
     private String extractDatePatternFromFileName(String filename) {
