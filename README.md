@@ -21,6 +21,26 @@ PUT http://elasticurl/covidstats
 }
 ```
 
+##### Install elasticsearch and kibana (v7.6.2)
+For linux : download elastic and kibana
+
+```wget -c https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.6.2-linux-x86_64.tar.gz```
+  
+```wget -c https://artifacts.elastic.co/downloads/kibana/kibana-7.6.2-linux-x86_64.tar.gz```
+
+- Launch elasticsearch (after extracting step)  
+
+```ELASTIC_HOME/bin/elasticsearch```
+
+Elasticsearch is now up and and listening on http://127.0.0.1:9200
+
+- Launch kibana (after extracting step)  
+
+```KIBANA_HOME/bin/kibana```  
+
+Kibana is now up and accessible on http://127.0.0.1:5601   
+
+
 ##### Start import in elastic
 Prerequisite : 
 - elasticsearch instance up
@@ -49,3 +69,6 @@ Prerequisite :
 Import dashboard object and index pattern in kibana
 
 Management > Saved objects, then import and upload into kibana ```kibana/dashboard_objetcs_and_index_pattern.ndjson``` file located inside this project
+
+If import is finished with success, you can access to this dashboard at this url :  
+```http://127.0.0.1:5601/app/kibana#/dashboard/44ad4430-746b-11ea-aea1-475f6f6784e2?_g=(filters:!(),refreshInterval:(pause:!t,value:0),time:(from:now-90d,to:now))``` 
